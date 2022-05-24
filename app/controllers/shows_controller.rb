@@ -4,21 +4,22 @@ class ShowsController < ApplicationController
   end
 
   def show
-    render json: show
+    render json: current_show
   end
 
   def create
-    show = Show.create(show_params)
+    Show.create(show_params)
+    render json: "Show #{show_params.name} has been created."
   end
 
   def update
-    show.update(show_params)
-    render json "#{show.name} has been updated."
+    current_show.update(show_params)
+    render json "#{current_show.name} has been updated."
   end
 
   def destroy
-    show.destroy
-    render json "#{show.name} has been destroyedß."
+    current_show.destroy
+    render json "#{current_show.name} has been destroyed."
   end
 
   private
@@ -27,7 +28,7 @@ class ShowsController < ApplicationController
     params.require(:name, :year)
   end
 
-  def show
+  def current_show
     @_show ||= Show.find(params[:id])
   end
 end
