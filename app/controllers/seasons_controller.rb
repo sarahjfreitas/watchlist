@@ -32,7 +32,7 @@ class SeasonsController < ApplicationController
   private
 
   def season_params
-    params.permit(:number, :show_id, :description)
+    params.require(:season).permit(:number, :show_id, :description)
   end
 
   def season

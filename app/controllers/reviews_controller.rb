@@ -10,10 +10,10 @@ class ReviewsController < ApplicationController
   def create
     @review = Review.new(review_params)
 
-    if review.save
-      render json: review, status: :created
+    if @review.save
+      render json: @review, status: :created
     else
-      render json: review.errors, status: :unprocessable_entity
+      render json: @review.errors, status: :unprocessable_entity
     end
   end
 
@@ -26,7 +26,7 @@ class ReviewsController < ApplicationController
   end
 
   def destroy
-    @review.destroy
+    review.destroy
   end
 
   private
@@ -36,6 +36,6 @@ class ReviewsController < ApplicationController
   end
 
   def review
-    @_review ||= review.find(params[:id])
+    @_review ||= Review.find(params[:id])
   end
 end

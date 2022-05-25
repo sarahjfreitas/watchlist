@@ -36,6 +36,6 @@ class EpisodesController < ApplicationController
   end
 
   def episode
-    @_episode ||= episode.find(params[:id])
+    @_episode ||= Episode.find(params[:id])
   end
 end

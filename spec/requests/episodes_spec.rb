@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe "/episodes", type: :request do
   let(:show) { Show.create!(name: "Name", year: 2022) }
   let(:season) { Season.create!(number: 1, show: show) }
-  let(:valid_attributes) {{ name: "Name", number: 1, season_id: season.id }}
-  let(:invalid_attributes) {{ name: "Name" }}
+  let(:valid_attributes) { { name: "Name", number: 1, season_id: season.id } }
+  let(:invalid_attributes) { { name: "Name" } }
   let(:episode) { Episode.create! valid_attributes }
 
   describe "GET /index" do
@@ -63,7 +63,7 @@ RSpec.describe "/episodes", type: :request do
         expect{subject}.to change(Episode, :count).by(0)
       end
 
-      it "renders a JSON response with errors for the new episode"
+      it "renders a JSON response with errors for the new episode" do
         subject
         aggregate_failures do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -75,7 +75,7 @@ RSpec.describe "/episodes", type: :request do
 
   describe "PATCH /update" do
     context "with valid parameters" do
-      subject { patch "/episodes/#{episode.id}", params: { name: "New name" } }
+      subject { patch "/episodes/#{episode.id}", params: { episode: { name: "New name" } } }
 
       it "updates the requested episode" do
         subject
@@ -96,7 +96,7 @@ RSpec.describe "/episodes", type: :request do
     end
 
     context "with invalid parameters" do
-      subject { patch "/episodes/#{episode.id}", params: { name: "" } }
+      subject { patch "/episodes/#{episode.id}", params: { episode: { name: "" } } }
 
       it "renders a JSON response with errors for the episode" do
         subject
@@ -114,7 +114,7 @@ RSpec.describe "/episodes", type: :request do
     subject { delete "/episodes/#{episode.id}" }
 
     it "destroys the requested episode" do
-      subject
+      episode
       expect { subject }.to change(Episode, :count).by(-1)
     end
   end

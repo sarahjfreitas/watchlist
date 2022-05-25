@@ -11,10 +11,10 @@ class WatchesController < ApplicationController
   def create
     @watch = Watch.new(watch_params)
 
-    if watch.save
-      render json: watch, status: :created
+    if @watch.save
+      render json: @watch, status: :created
     else
-      render json: watch.errors, status: :unprocessable_entity
+      render json: @watch.errors, status: :unprocessable_entity
     end
   end
 
@@ -27,7 +27,7 @@ class WatchesController < ApplicationController
   end
 
   def destroy
-    @watch.destroy
+    watch.destroy
   end
 
   private

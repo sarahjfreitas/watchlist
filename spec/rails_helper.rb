@@ -8,7 +8,7 @@ require 'rspec/rails'
 
 require 'simplecov'
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
-SimpleCov.start
+SimpleCov.start 'rails'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
