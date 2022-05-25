@@ -10,10 +10,10 @@ class SeasonsController < ApplicationController
   def create
     @season = Season.new(season_params)
 
-    if season.save
-      render json: season, status: :created
+    if @season.save
+      render json: @season, status: :created
     else
-      render json: season.errors, status: :unprocessable_entity
+      render json: @season.errors, status: :unprocessable_entity
     end
   end
 
@@ -26,13 +26,13 @@ class SeasonsController < ApplicationController
   end
 
   def destroy
-    @season.destroy
+    season.destroy
   end
 
   private
 
   def season_params
-    params.require(:number, :show_id).permit(:description)
+    params.permit(:number, :show_id, :description)
   end
 
   def season

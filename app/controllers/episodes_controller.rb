@@ -10,10 +10,10 @@ class EpisodesController < ApplicationController
   def create
     @episode = Episode.new(episode_params)
 
-    if episode.save
-      render json: episode, status: :created
+    if @episode.save
+      render json: @episode, status: :created
     else
-      render json: episode.errors, status: :unprocessable_entity
+      render json: @episode.errors, status: :unprocessable_entity
     end
   end
 
@@ -26,13 +26,13 @@ class EpisodesController < ApplicationController
   end
 
   def destroy
-    @episode.destroy
+    episode.destroy
   end
 
   private
 
   def episode_params
-    params.require(:episode).permit(:name, :number)
+    params.require(:episode).permit(:name, :number, :season_id)
   end
 
   def episode
