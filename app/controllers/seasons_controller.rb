@@ -8,18 +8,25 @@ class SeasonsController < ApplicationController
   end
 
   def create
-    Season.create(season_params)
-    render json: "Season #{season_params.number} has been created."
+    @season = Season.new(season_params)
+
+    if season.save
+      render json: season, status: :created
+    else
+      render json: season.errors, status: :unprocessable_entity
+    end
   end
 
   def update
-    season.update(season_params)
-    render json: "Season #{season.number} has been updated."
+    if season.update(season_params)
+      render json: season
+    else
+      render json: season.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy
-    season.destroy
-    render json: "Season #{season.number} has been destroyed."
+    @season.destroy
   end
 
   private

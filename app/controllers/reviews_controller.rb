@@ -1,6 +1,6 @@
 class ReviewsController < ApplicationController
   def index
-    render json: review.all
+    render json: Review.all
   end
 
   def show
@@ -8,24 +8,31 @@ class ReviewsController < ApplicationController
   end
 
   def create
-    Review.create(review_params)
-    render json: "review from #{review_params.author} has been created."
+    @review = Review.new(review_params)
+
+    if review.save
+      render json: review, status: :created
+    else
+      render json: review.errors, status: :unprocessable_entity
+    end
   end
 
   def update
-    review.update(review_params)
-    render json: "review from #{review_params.author} has been updated."
+    if review.update(review_params)
+      render json: review
+    else
+      render json: review.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy
-    review.destroy
-    render json: "review from #{review_params.author} has been destroyed."
+    @review.destroy
   end
 
   private
 
   def review_params
-    params.require(:author, :stars, :content, :show_id)
+    params.require(:review).permit(:author, :stars, :content, :show_id)
   end
 
   def review
