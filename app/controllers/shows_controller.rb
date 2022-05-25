@@ -8,24 +8,32 @@ class ShowsController < ApplicationController
   end
 
   def create
-    Show.create(show_params)
-    render json: "Show #{show_params.name} has been created."
+    @show = Show.new(show_params)
+
+    if current_show.save
+      render json: current_show, status: :created
+    else
+      render json: current_show.errors, status: :unprocessable_entity
+    end
+    render json: current_show.errors, status: :unprocessable_entity
   end
 
   def update
-    current_show.update(show_params)
-    render json "#{current_show.name} has been updated."
+    if current_show.update(show_params)
+      render json: current_show
+    else 
+      render json: current_show.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy
-    current_show.destroy
-    render json "#{current_show.name} has been destroyed."
+    @show.destroy
   end
 
   private
 
   def show_params
-    params.require(:name, :year)
+    params.require(:show).permit(:name, :year)
   end
 
   def current_show

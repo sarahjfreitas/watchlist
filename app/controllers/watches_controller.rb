@@ -1,5 +1,4 @@
 class WatchesController < ApplicationController
-  before_action :set_watch, only: [:show, :update, :destroy]
 
   def index
     render json: Watch.all
@@ -12,18 +11,18 @@ class WatchesController < ApplicationController
   def create
     @watch = Watch.new(watch_params)
 
-    if @watch.save
-      render json: @watch, status: :created, location: @watch
+    if watch.save
+      render json: watch, status: :created
     else
-      render json: @watch.errors, status: :unprocessable_entity
+      render json: watch.errors, status: :unprocessable_entity
     end
   end
 
   def update
     if watch.update(watch_params)
-      render json: @watch
+      render json: watch
     else
-      render json: @watch.errors, status: :unprocessable_entity
+      render json: watch.errors, status: :unprocessable_entity
     end
   end
 

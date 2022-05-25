@@ -8,24 +8,31 @@ class EpisodesController < ApplicationController
   end
 
   def create
-    Episode.create(episode_params)
-    render json: "episode #{episode_params.number} has been created."
+    @episode = Episode.new(episode_params)
+
+    if episode.save
+      render json: episode, status: :created
+    else
+      render json: episode.errors, status: :unprocessable_entity
+    end
   end
 
   def update
-    episode.update(episode_params)
-    render json: "episode #{episode.number} has been updated."
+    if episode.update(episode_params)
+      render json: episode
+    else
+      render json: episode.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy
-    episode.destroy
-    render json: "episode #{episode.number} has been destroyed."
+    @episode.destroy
   end
 
   private
 
   def episode_params
-    params.require(:name, :number)
+    params.require(:episode).permit(:name, :number)
   end
 
   def episode
