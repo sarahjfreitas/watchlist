@@ -4,7 +4,7 @@ class CreateReviews < ActiveRecord::Migration[6.1]
       t.string :author
       t.string :content
       t.integer :stars
-      t.reference :show
+      t.references :show
 
       t.timestamps
     end

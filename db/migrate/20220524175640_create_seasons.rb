@@ -3,7 +3,7 @@ class CreateSeasons < ActiveRecord::Migration[6.1]
     create_table :seasons do |t|
       t.integer :number
       t.string :description
-      t.reference :show
+      t.references :show
 
       t.timestamps
     end

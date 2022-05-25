@@ -3,7 +3,7 @@ class CreateEpisodes < ActiveRecord::Migration[6.1]
     create_table :episodes do |t|
       t.integer :number
       t.string :name
-      t.reference :season
+      t.references :season
 
       t.timestamps
     end
