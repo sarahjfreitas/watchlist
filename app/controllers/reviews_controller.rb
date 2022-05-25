@@ -8,7 +8,7 @@ class ReviewsController < ApplicationController
   end
 
   def create
-    review.create(review_params)
+    Review.create(review_params)
     render json: "review from #{review_params.author} has been created."
   end
 
