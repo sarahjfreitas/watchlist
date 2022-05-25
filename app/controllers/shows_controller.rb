@@ -10,12 +10,11 @@ class ShowsController < ApplicationController
   def create
     @show = Show.new(show_params)
 
-    if current_show.save
-      render json: current_show, status: :created
+    if @show.save
+      render json: @show, status: :created
     else
-      render json: current_show.errors, status: :unprocessable_entity
+      render json: @show.errors, status: :unprocessable_entity
     end
-    render json: current_show.errors, status: :unprocessable_entity
   end
 
   def update
@@ -27,7 +26,7 @@ class ShowsController < ApplicationController
   end
 
   def destroy
-    @show.destroy
+    current_show.destroy
   end
 
   private
